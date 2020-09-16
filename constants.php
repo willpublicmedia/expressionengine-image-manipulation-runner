@@ -17,6 +17,8 @@ class Constants
     const DESCRIPTION = 'Runs image manipulation rules against previously uploaded images.';
 
     const DOCS_URL = 'https://gitlab.engr.illinois.edu/willpublicmedia/ee-image-manipulation-runner';
+
+    const MODULE_NAME = 'Image_manipulation_runner';
     
     const VERSION = '0.0.0';
 }
