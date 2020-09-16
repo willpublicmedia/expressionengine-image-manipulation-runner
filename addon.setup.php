@@ -9,5 +9,6 @@ return array(
     'name' => Constants::NAME,
     'description' => Constants::DESCRIPTION,
     'version' => Constants::VERSION,
-    'namespace' => 'IllinoisPublicMedia\ImageManipulationRunner'
+    'namespace' => 'IllinoisPublicMedia\ImageManipulationRunner',
+    'settings_exist' => true
 );
