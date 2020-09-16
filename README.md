@@ -1,3 +1,7 @@
-# Expression Engine Image Manipulation Runner
+# ExpressionEngine Image Manipulation Runner
 
-Expression Engine control panel addon to run image manipulation rules against previously uploaded images.
+ExpressionEngine control panel addon to run image manipulation rules against previously uploaded images.
+
+## Compatibility
+
+ExpressionEngine 5+.
