@@ -16,9 +16,8 @@ class Image_manipulation_runner_mcp
     {
         $html = '<p>Hello control panel.</p>';
 
-        $view = ee('View')->make(CONSTANTS::MODULE_NAME+':views/index');
-        $output = $view->render();
-
+        $view = ee('View')->make(strtolower(CONSTANTS::MODULE_NAME) . ':index');
+        $output = $view->render(array('message' => $html));
         return $output;
     }
 }
