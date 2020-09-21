@@ -1,10 +1,12 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-} ?>
+<?php 
+    if (!defined('BASEPATH'))
+    {
+        exit('No direct script access allowed');
+    } 
+    use IllinoisPublicMedia\ImageManipulationRunner\Constants;
+?>
 
 <h1>Image Manipulation Runner Control Panel</h1>
 <?= $message ?>
 
-<h2>Run Manipulations</h2>
-
-<p>Runs defined image manipulations against previously uploaded images.</p>
+<?php  $this->embed(strtolower(CONSTANTS::MODULE_NAME) . ':functions/run_manipulations'); ?>

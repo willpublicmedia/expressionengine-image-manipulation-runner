@@ -20,4 +20,9 @@ class Image_manipulation_runner_mcp
         $output = $view->render(array('message' => $html));
         return $output;
     }
+
+    public function run_manipulations($bucket = null)
+    {
+        return false;
+    }
 }
