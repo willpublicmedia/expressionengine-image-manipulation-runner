@@ -7,17 +7,19 @@ use IllinoisPublicMedia\ImageManipulationRunner\Constants;
 
 class Image_manipulation_runner_mcp
 {
-    private $base_uri = 'addons/settings/'+CONSTANTS::MODULE_NAME;
+    private $base_uri;
     public function __construct()
     {
+        $this->base_uri = ee('CP/URL')->make('addons/settings/' . strtolower(CONSTANTS::MODULE_NAME));
     }
 
     public function index()
     {
         $validation_results = null;
         if (!empty($_POST)) {
+            
             ee('CP/Alert')->makeInline('image-manipulator-form')
-                ->asSuccess()
+                ->asAlert()
                 ->withTitle('Image Manipulator')
                 ->addToBody('Request posted.')
                 ->defer();
@@ -103,10 +105,10 @@ class Image_manipulation_runner_mcp
                 'image_destination' => array(
                     'type' => 'radio',
                     'choices' => $file_choices,
-                    'value' => '',
+                    'value' => '0',
                 ),
             ),
-            'required' => true,
+            'required' => false,
         );
 
         return $upload_field;
