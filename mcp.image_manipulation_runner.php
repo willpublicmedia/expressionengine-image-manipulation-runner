@@ -19,12 +19,12 @@ class Image_manipulation_runner_mcp
         if (!empty($_POST)) {
             
             ee('CP/Alert')->makeInline('image-manipulator-form')
-                ->asAlert()
+                ->asSuccess()
                 ->withTitle('Image Manipulator')
                 ->addToBody('Request posted.')
                 ->defer();
 
-            // $validation_results = $this->process_form_data($_POST);
+            $validation_results = $this->process_form_data($_POST);
 
             // if ($validation_results->isValid()) {
             //     $this->save_settings($_POST, 'npr_story_api_settings');
@@ -112,5 +112,23 @@ class Image_manipulation_runner_mcp
         );
 
         return $upload_field;
+    }
+
+    private function process_form_data($data)
+    {
+        // check valid bucket
+        $valid_destination = $this->validate_destination($data['image_destination']);
+        return;
+    }
+
+    private function validate_destination($destination)
+    {
+        $model = ee('Model')->get('UploadDestination')
+            ->filter('site_id', ee()->config->item('site_id'))
+            ->filter('module_id', 0) // limit selection to user-defined destinations
+            ->filter('id', $destination)
+            ->first();
+
+        return;
     }
 }
