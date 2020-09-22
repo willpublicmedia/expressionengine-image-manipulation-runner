@@ -15,6 +15,19 @@ class Image_manipulation_runner_mcp
     public function index()
     {
         $validation_results = null;
+        if (!empty($_POST)) {
+            ee('CP/Alert')->makeInline('image-manipulator-form')
+                ->asSuccess()
+                ->withTitle('Image Manipulator')
+                ->addToBody('Request posted.')
+                ->defer();
+
+            // $validation_results = $this->process_form_data($_POST);
+
+            // if ($validation_results->isValid()) {
+            //     $this->save_settings($_POST, 'npr_story_api_settings');
+            // }
+        }
 
         $form_fields = $this->build_fields();
 
@@ -62,7 +75,7 @@ class Image_manipulation_runner_mcp
     private function build_fields()
     {
         $form_fields = array(
-            'EE Image Tools' => array()
+            'EE Image Tools' => array(),
         );
         $form_fields['EE Image Tools'][] = $this->get_upload_destinations();
         $form_fields['EE Image Tools'][] = $this->build_delete_field();
