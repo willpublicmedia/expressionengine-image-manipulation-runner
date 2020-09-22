@@ -23,21 +23,58 @@ class Image_manipulation_runner_mcp
 
     public function run_manipulations($bucket = null)
     {
-        return false;
+        $validation_results = null;
+        if (!empty($_POST)) {
+            $validation_results = $this->process_form_data($_POST);
+
+            if ($validation_results->isValid()) {
+                $this->save_settings($_POST, 'npr_story_api_settings');
+            }
+        }
+
+        $form_fields = array();
+        $form_fields[] = $this->get_upload_destinations();
+        $form_fields[] = $this->build_delete_field();
+
+        $data = array(
+            'base_url' => $this->base_url,
+            'cp_page_title' => 'Run Manipulations',
+            'errors' => $validation_results,
+            'save_btn_text' => 'Run',
+            'save_btn_text_working' => 'Running...',
+            'sections' => $form_fields,
+        );
+
+        return ee('View')->make('ee:_shared/form')->render($data);
     }
 
-    private function get_upload_destinations() {
+    private function build_delete_field()
+    {
+        $field = array(
+            'title' => 'Delete existing manipulations',
+            'desc' => 'Delete existing manipulations before generating new ones.',
+            'fields' => array(
+                'mapped_channels' => array(
+                    'type' => 'toggle',
+                    'value' => '',
+                ),
+            ),
+            'required' => false,
+        );
+    }
+
+    private function get_upload_destinations()
+    {
         $destinations = ee('Model')->get('UploadDestination')
             ->filter('site_id', ee()->config->item('site_id'))
             ->filter('module_id', 0) // limit selection to user-defined destinations
             ->all();
 
         $file_choices = array();
-        foreach ($destinations as $dest) { 
+        foreach ($destinations as $dest) {
             $file_choices[$dest->id] = $dest->name;
         }
-            
-        
+
         $upload_field = array(
             'title' => 'Image Upload Destination',
             // should be able to use BASE here, but url swaps session token and uri.
@@ -46,10 +83,10 @@ class Image_manipulation_runner_mcp
                 'npr_image_destination' => array(
                     'type' => 'radio',
                     'choices' => $file_choices,
-                    'value' => ''
-                )
+                    'value' => '',
+                ),
             ),
-            'required' => true
+            'required' => true,
         );
 
         return $upload_field;
