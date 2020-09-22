@@ -8,5 +8,3 @@
 
 <h1>Image Manipulation Runner Control Panel</h1>
 <?= $message ?>
-
-<?php  $this->embed(strtolower(CONSTANTS::MODULE_NAME) . ':functions/run_manipulations'); ?>

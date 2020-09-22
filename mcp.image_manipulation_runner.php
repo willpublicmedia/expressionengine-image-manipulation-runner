@@ -14,30 +14,12 @@ class Image_manipulation_runner_mcp
 
     public function index()
     {
-        $html = '<p>Hello control panel.</p>';
-
-        $view = ee('View')->make(strtolower(CONSTANTS::MODULE_NAME) . ':index');
-        $output = $view->render(array('message' => $html));
-        return $output;
-    }
-
-    public function run_manipulations($bucket = null)
-    {
         $validation_results = null;
-        if (!empty($_POST)) {
-            $validation_results = $this->process_form_data($_POST);
 
-            if ($validation_results->isValid()) {
-                $this->save_settings($_POST, 'npr_story_api_settings');
-            }
-        }
-
-        $form_fields = array();
-        $form_fields[] = $this->get_upload_destinations();
-        $form_fields[] = $this->build_delete_field();
+        $form_fields = $this->build_fields();
 
         $data = array(
-            'base_url' => $this->base_url,
+            'base_url' => $this->base_uri,
             'cp_page_title' => 'Run Manipulations',
             'errors' => $validation_results,
             'save_btn_text' => 'Run',
@@ -48,19 +30,44 @@ class Image_manipulation_runner_mcp
         return ee('View')->make('ee:_shared/form')->render($data);
     }
 
+    public function run_manipulations($bucket = null)
+    {
+        // $validation_results = null;
+        // if (!empty($_POST)) {
+        //     $validation_results = $this->process_form_data($_POST);
+
+        //     if ($validation_results->isValid()) {
+        //         $this->save_settings($_POST, 'npr_story_api_settings');
+        //     }
+        // }
+    }
+
     private function build_delete_field()
     {
         $field = array(
             'title' => 'Delete existing manipulations',
             'desc' => 'Delete existing manipulations before generating new ones.',
             'fields' => array(
-                'mapped_channels' => array(
+                'clean_files' => array(
                     'type' => 'toggle',
                     'value' => '',
                 ),
             ),
             'required' => false,
         );
+
+        return $field;
+    }
+
+    private function build_fields()
+    {
+        $form_fields = array(
+            'EE Image Tools' => array()
+        );
+        $form_fields['EE Image Tools'][] = $this->get_upload_destinations();
+        $form_fields['EE Image Tools'][] = $this->build_delete_field();
+
+        return $form_fields;
     }
 
     private function get_upload_destinations()
@@ -78,9 +85,9 @@ class Image_manipulation_runner_mcp
         $upload_field = array(
             'title' => 'Image Upload Destination',
             // should be able to use BASE here, but url swaps session token and uri.
-            'desc' => 'Choose an appropriate image gallery from the <a href="/admin.php?cp/files">Files</a> menu.',
+            'desc' => 'Choose an target image gallery from the <a href="/admin.php?cp/files">Files</a> menu.',
             'fields' => array(
-                'npr_image_destination' => array(
+                'image_destination' => array(
                     'type' => 'radio',
                     'choices' => $file_choices,
                     'value' => '',
