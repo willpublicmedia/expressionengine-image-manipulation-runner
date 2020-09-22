@@ -4,6 +4,8 @@
 
 require_once __DIR__ . '/constants.php';
 use IllinoisPublicMedia\ImageManipulationRunner\Constants;
+require_once __DIR__ . '/libraries/validation/settings_validator.php';
+use IllinoisPublicMedia\ImageManipulationRunner\Libraries\Validation\Settings_validator;
 
 class Image_manipulation_runner_mcp
 {
@@ -123,11 +125,14 @@ class Image_manipulation_runner_mcp
 
     private function validate_destination($destination)
     {
+        $rules = Settings_validator::SETTINGS_RULES;
         $model = ee('Model')->get('UploadDestination')
             ->filter('site_id', ee()->config->item('site_id'))
             ->filter('module_id', 0) // limit selection to user-defined destinations
             ->filter('id', $destination)
             ->first();
+    
+        $result = ee('Validation')->make($rules)->validate($model);
 
         return;
     }
