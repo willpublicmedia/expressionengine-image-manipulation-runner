@@ -18,18 +18,13 @@ class Image_manipulation_runner_mcp
     public function index()
     {
         $validation_results = null;
-        if (!empty($_POST)) {
+        if (array_key_exists('image_destination', $_POST)) {
+            $request = $_POST['image_destination'];
 
-            ee('CP/Alert')->makeInline('image-manipulator-form')
-                ->asSuccess()
-                ->withTitle('Image Manipulator')
-                ->addToBody('Request posted.')
-                ->defer();
-
-            $validation_results = $this->validate_destination($_POST['image_destination']);
+            $validation_results = $this->validate_destination($request);
 
             if ($validation_results->isValid()) {
-                $this->run_manipulations($_POST);
+                $this->run_manipulations($request);
             } else {
                 $this->handle_validation_errors($validation_results);
             }
