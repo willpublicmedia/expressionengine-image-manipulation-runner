@@ -51,8 +51,6 @@ class Image_manipulation_runner_mcp
 
     public function run_manipulations($destination_id, $clean = false)
     {
-        ee()->load->helper('file');
-
         $model = ee('Model')->get('UploadDestination')
             ->filter('site_id', ee()->config->item('site_id'))
             ->filter('module_id', 0) // limit selection to user-defined destinations
@@ -98,6 +96,14 @@ class Image_manipulation_runner_mcp
 
     private function clean_old_manipulations($model)
     {
+        ee()->load->helper('file');
+
+        $manipulations = $model->FileDimension;
+
+        foreach ($manipulations as $manipulation)
+        {
+            echo '<p>meat</p>';
+        }
         return;
     }
 
