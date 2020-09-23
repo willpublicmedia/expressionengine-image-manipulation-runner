@@ -93,11 +93,12 @@ class Image_manipulation_runner_mcp
     {
         ee()->load->helper('file');
 
-        $manipulations = $model->FileDimension;
+        $manipulations = $model->FileDimensions;
 
         foreach ($manipulations as $manipulation)
         {
-            echo '<p>meat</p>';
+            $path = realpath(join(DIRECTORY_SEPARATOR, array($model->server_path, $manipulation->short_name)));
+            echo "<p>$path</p>";
         }
         return;
     }
