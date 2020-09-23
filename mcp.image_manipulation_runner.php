@@ -26,7 +26,7 @@ class Image_manipulation_runner_mcp
                 ->addToBody('Request posted.')
                 ->defer();
 
-            $validation_results = $this->process_form_data($_POST);
+            $validation_results = $this->validate_destination($_POST['image_destination']);
 
             if ($validation_results->isValid())
             {
@@ -116,13 +116,6 @@ class Image_manipulation_runner_mcp
 
     private function handle_validation_errors($results)
     {
-        return;
-    }
-
-    private function process_form_data($data)
-    {
-        // check valid bucket
-        $valid_destination = $this->validate_destination($data['image_destination']);
         return;
     }
 
