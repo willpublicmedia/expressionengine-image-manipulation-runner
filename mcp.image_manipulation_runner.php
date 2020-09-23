@@ -142,13 +142,17 @@ class Image_manipulation_runner_mcp
 
         $manipulations = $destination->FileDimensions;
         $files = $destination->Files;
-        // foreach ($manipulations as $manipulation)
-        // {
-        //     ee()->image_lib->clear();
+        $resize_results = array();
 
-        // }
+        $resize_results = array();
+        foreach ($files as $file) {
+            foreach ($manipulations as $manipulation) {
+                $result = $manipulation->getNewDimensionsOfFile($file);
+                $resize_results[] = $result;
+            }
+        }
 
-        return;
+        return $resize_results;
     }
 
     private function validate_destination($destination)
