@@ -51,12 +51,14 @@ class Image_manipulation_runner_mcp
 
     public function run_manipulations($destination_id, $clean = false)
     {
+        ee()->load->helper('file');
+
         $model = ee('Model')->get('UploadDestination')
             ->filter('site_id', ee()->config->item('site_id'))
             ->filter('module_id', 0) // limit selection to user-defined destinations
             ->filter('id', $destination_id)
             ->first();
-        
+
         // check clean
         if ($clean) {
             $this->clean_old_manipulations($destination);
