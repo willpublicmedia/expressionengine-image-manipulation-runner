@@ -19,12 +19,12 @@ class Image_manipulation_runner_mcp
     {
         $validation_results = null;
         if (array_key_exists('image_destination', $_POST)) {
-            $request = $_POST['image_destination'];
+            $request = $_POST;
 
-            $validation_results = $this->validate_destination($request);
+            $validation_results = $this->validate_destination($request['image_destination']);
 
             if ($validation_results->isValid()) {
-                $this->run_manipulations($request);
+                $this->run_manipulations($request['image_destination'], boolval($request['clean_files']));
             } else {
                 $this->handle_validation_errors($validation_results);
             }
@@ -54,11 +54,11 @@ class Image_manipulation_runner_mcp
 
         // check clean
         if ($clean) {
-            $this->clean_old_manipulations($destination);
+            $this->clean_old_manipulations($model);
         }
         // run manipulations
 
-        $this->resize_images($destination);
+        $this->resize_images($model);
     }
 
     private function build_delete_field()
