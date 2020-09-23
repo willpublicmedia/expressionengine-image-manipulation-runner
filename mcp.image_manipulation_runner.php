@@ -28,9 +28,14 @@ class Image_manipulation_runner_mcp
 
             $validation_results = $this->process_form_data($_POST);
 
-            // if ($validation_results->isValid()) {
-            //     $this->save_settings($_POST, 'npr_story_api_settings');
-            // }
+            if ($validation_results->isValid())
+            {
+                $this->run_manipulations($_POST);
+            }
+            else
+            {
+                $this->handle_validation_errors($validation_results);
+            }
         }
 
         $form_fields = $this->build_fields();
@@ -47,16 +52,9 @@ class Image_manipulation_runner_mcp
         return ee('View')->make('ee:_shared/form')->render($data);
     }
 
-    public function run_manipulations($bucket = null)
+    public function run_manipulations($bucket)
     {
-        // $validation_results = null;
-        // if (!empty($_POST)) {
-        //     $validation_results = $this->process_form_data($_POST);
-
-        //     if ($validation_results->isValid()) {
-        //         $this->save_settings($_POST, 'npr_story_api_settings');
-        //     }
-        // }
+        return;
     }
 
     private function build_delete_field()
@@ -114,6 +112,11 @@ class Image_manipulation_runner_mcp
         );
 
         return $upload_field;
+    }
+
+    private function handle_validation_errors($results)
+    {
+        return;
     }
 
     private function process_form_data($data)
