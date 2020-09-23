@@ -52,11 +52,9 @@ class Image_manipulation_runner_mcp
             ->filter('id', $destination_id)
             ->first();
 
-        // check clean
         if ($clean) {
             $this->clean_old_manipulations($model);
         }
-        // run manipulations
 
         $this->resize_images($model);
     }
