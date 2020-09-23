@@ -64,6 +64,8 @@ class Image_manipulation_runner_mcp
             $this->clean_old_manipulations($destination);
         }
         // run manipulations
+
+        $this->resize_images($destination);
     }
 
     private function build_delete_field()
@@ -130,6 +132,12 @@ class Image_manipulation_runner_mcp
 
     private function handle_validation_errors($results)
     {
+        return;
+    }
+
+    private function resize_images($destination)
+    {
+        ee()->load->library('image_lib');
         return;
     }
 
