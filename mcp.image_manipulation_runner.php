@@ -130,6 +130,7 @@ class Image_manipulation_runner_mcp
             ->filter('site_id', ee()->config->item('site_id'))
             ->filter('module_id', 0) // limit selection to user-defined destinations
             ->filter('id', $destination)
+            ->with('FileDimensions')
             ->first();
     
         $data = array('allowed_types' => $model->allowed_types);
