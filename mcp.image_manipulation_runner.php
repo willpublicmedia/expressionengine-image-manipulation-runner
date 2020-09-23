@@ -143,7 +143,15 @@ class Image_manipulation_runner_mcp
     private function resize_images($destination)
     {
         ee()->load->library('image_lib');
-        ee()->image_lib->clear();
+
+        $manipulations = $destination->FileDimensions;
+        $files = $destination->Files;
+        // foreach ($manipulations as $manipulation)
+        // {
+        //     ee()->image_lib->clear();
+
+        // }
+
         return;
     }
 
