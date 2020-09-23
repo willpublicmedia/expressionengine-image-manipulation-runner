@@ -133,9 +133,12 @@ class Image_manipulation_runner_mcp
             ->with('FileDimensions')
             ->first();
     
-        $data = array('allowed_types' => $model->allowed_types);
+        $data = array(
+            'allowed_types' => $model->allowed_types,
+            'file_dimensions' => count($model->FileDimensions->count())
+        );
         $result = ee('Validation')->make($rules)->validate($model->toArray());
 
-        return;
+        return $result;
     }
 }

@@ -14,7 +14,8 @@ class Settings_validator {
      * Default validation rules for NPR Story API settings.
      */
     public const SETTINGS_RULES = array(
-        'allowed_types' => 'required|enum[img]'
+        'allowed_types' => 'required|enum[img]',
+        'file_dimensions' => 'greaterThan[0]'
     );
 
     /**
