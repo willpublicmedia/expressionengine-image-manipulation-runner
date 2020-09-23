@@ -95,10 +95,13 @@ class Image_manipulation_runner_mcp
 
         $manipulations = $model->FileDimensions;
 
-        foreach ($manipulations as $manipulation)
-        {
-            $path = realpath(join(DIRECTORY_SEPARATOR, array($model->server_path, $manipulation->short_name)));
-            echo "<p>$path</p>";
+        foreach ($manipulations as $manipulation) {
+            $dir = '_' . $manipulation->short_name;
+            $path = realpath(join(DIRECTORY_SEPARATOR, array($model->server_path, $dir)));
+
+            $del_dir = true;
+            $del_success = delete_files($path, $del_dir);
+            echo "<p>$path: $del_success</p>";
         }
         return;
     }
