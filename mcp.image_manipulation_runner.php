@@ -132,7 +132,8 @@ class Image_manipulation_runner_mcp
             ->filter('id', $destination)
             ->first();
     
-        $result = ee('Validation')->make($rules)->validate($model);
+        $data = array('allowed_types' => $model->allowed_types);
+        $result = ee('Validation')->make($rules)->validate($model->toArray());
 
         return;
     }
