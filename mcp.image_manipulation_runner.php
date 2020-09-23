@@ -19,7 +19,7 @@ class Image_manipulation_runner_mcp
     {
         $validation_results = null;
         if (!empty($_POST)) {
-            
+
             ee('CP/Alert')->makeInline('image-manipulator-form')
                 ->asSuccess()
                 ->withTitle('Image Manipulator')
@@ -28,12 +28,9 @@ class Image_manipulation_runner_mcp
 
             $validation_results = $this->validate_destination($_POST['image_destination']);
 
-            if ($validation_results->isValid())
-            {
+            if ($validation_results->isValid()) {
                 $this->run_manipulations($_POST);
-            }
-            else
-            {
+            } else {
                 $this->handle_validation_errors($validation_results);
             }
         }
@@ -52,9 +49,19 @@ class Image_manipulation_runner_mcp
         return ee('View')->make('ee:_shared/form')->render($data);
     }
 
-    public function run_manipulations($bucket)
+    public function run_manipulations($destination_id, $clean = false)
     {
-        return;
+        $model = ee('Model')->get('UploadDestination')
+            ->filter('site_id', ee()->config->item('site_id'))
+            ->filter('module_id', 0) // limit selection to user-defined destinations
+            ->filter('id', $destination_id)
+            ->first();
+        
+        // check clean
+        if ($clean) {
+            $this->clean_old_manipulations($destination);
+        }
+        // run manipulations
     }
 
     private function build_delete_field()
@@ -83,6 +90,11 @@ class Image_manipulation_runner_mcp
         $form_fields['EE Image Tools'][] = $this->build_delete_field();
 
         return $form_fields;
+    }
+
+    private function clean_old_manipulations($model)
+    {
+        return;
     }
 
     private function get_upload_destinations()
@@ -128,10 +140,10 @@ class Image_manipulation_runner_mcp
             ->filter('id', $destination)
             ->with('FileDimensions')
             ->first();
-    
+
         $data = array(
             'allowed_types' => $model->allowed_types,
-            'file_dimensions' => count($model->FileDimensions->count())
+            'file_dimensions' => count($model->FileDimensions->count()),
         );
         $result = ee('Validation')->make($rules)->validate($model->toArray());
 
