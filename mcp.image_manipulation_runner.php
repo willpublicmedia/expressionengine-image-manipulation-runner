@@ -147,57 +147,51 @@ class Image_manipulation_runner_mcp
         $resize_results = array();
         foreach ($files as $file) {
             foreach ($manipulations as $manipulation) {
-                $config = array(
-                    'width'				=> $manipulation->width,
-                    'maintain_ratio'	=> true,
-                    'library_path'		=> $destination->server_path,
-                    'image_library'		=> ee()->config->item('image_resize_protocol'),
-                    'source_image'		=> $file->getAbsolutePath(),
-                    'new_image'			=> join(DIRECTORY_SEPARATOR, array(rtrim($manipulation->getAbsolutePath(), DIRECTORY_SEPARATOR), $file->file_name))
-                );
-        
-                if (ee()->input->get_post('resize_height') != '')
-                {
-                    $config['height'] = ee()->input->get_post('resize_height');
+                if (!$file->exists()) {
+                    continue;
                 }
-                else
-                {
+
+                $config = array(
+                    'width' => $manipulation->width,
+                    'maintain_ratio' => true,
+                    'library_path' => $destination->server_path,
+                    'image_library' => ee()->config->item('image_resize_protocol'),
+                    'source_image' => $file->getAbsolutePath(),
+                    'new_image' => join(DIRECTORY_SEPARATOR, array(rtrim($manipulation->getAbsolutePath(), DIRECTORY_SEPARATOR), $file->file_name)),
+                );
+
+                if (ee()->input->get_post('resize_height') != '') {
+                    $config['height'] = ee()->input->get_post('resize_height');
+                } else {
                     $config['master_dim'] = 'width';
                 }
-        
+
                 // Must initialize seperately in case image_lib was loaded previously
                 ee()->load->library('image_lib');
                 $return = ee()->image_lib->initialize($config);
-        
-                if ($return === FALSE)
-                {
+
+                if ($return === false) {
                     $errors = ee()->image_lib->display_errors();
-                }
-                else
-                {
-                    if ( ! ee()->image_lib->resize())
-                    {
+                } else {
+                    if (!ee()->image_lib->resize()) {
                         $errors = ee()->image_lib->display_errors();
                     }
                 }
-        
+
                 $reponse = array();
-        
-                if (isset($errors))
-                {
+
+                if (isset($errors)) {
                     $response['errors'] = $errors;
-                }
-                else
-                {
+                } else {
                     ee()->load->helper('file');
                     $response = array(
-                        'dimensions' => ee()->image_lib->get_image_properties('', TRUE),
-                        'file_info'  => get_file_info($file_path)
+                        'dimensions' => ee()->image_lib->get_image_properties('', true),
+                        'file_info' => get_file_info($file_path),
                     );
                 }
-        
+
                 ee()->image_lib->clear();
-        
+
                 $resize_results[] = $response;
             }
         }
