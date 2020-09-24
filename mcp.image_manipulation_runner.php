@@ -133,6 +133,25 @@ class Image_manipulation_runner_mcp
 
     private function handle_validation_errors($results)
     {
+        $errors = $results->getAllErrors();
+        if (array_key_exists('allowed_types', $errors)) {
+            // set issue
+            ee('CP/Alert')->makeInline('image-manipulation-runner')
+                ->asIssue()
+                ->withTitle('Invalid Selection')
+                ->addToBody('Select an image-only file destination.')
+                ->defer();
+        }
+
+        if (array_key_exists('file_dimensions', $errors)) {
+            // set issue
+            ee('CP/Alert')->makeInline('image-manipulation-runner')
+                ->asInfo()
+                ->withTitle('No action necessary')
+                ->addToBody('Image destination has no file manipulations defined.')
+                ->defer();
+        }
+
         return;
     }
 
