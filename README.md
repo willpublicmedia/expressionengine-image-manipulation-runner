@@ -5,3 +5,9 @@ ExpressionEngine control panel addon to run image manipulation rules against pre
 ## Compatibility
 
 ExpressionEngine 5+.
+
+## Changelog
+
+### 0.0.0
+
+- Alpha release
