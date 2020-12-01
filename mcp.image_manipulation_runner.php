@@ -48,16 +48,19 @@ class Image_manipulation_runner_mcp
     public function run_manipulations($destination_id, $clean = false)
     {
         $model = ee('Model')->get('UploadDestination')
-            ->filter('site_id', ee()->config->item('site_id'))
-            ->filter('module_id', 0) // limit selection to user-defined destinations
-            ->filter('id', $destination_id)
-            ->first();
+        ->filter('site_id', ee()->config->item('site_id'))
+        ->filter('module_id', 0) // limit selection to user-defined destinations
+        ->filter('id', $destination_id)
+        ->first();
+
+        ee()->logger->developer(Constants::NAME . ': began resizing ' . $model->name);
 
         if ($clean) {
             $this->clean_old_manipulations($model);
         }
 
         $this->resize_images($model);
+        ee()->logger->developer(Constants::NAME . ': finished resizing ' . $model->name);
     }
 
     private function build_delete_field()
