@@ -205,6 +205,7 @@ class Image_manipulation_runner_mcp
                 if (isset($errors)) {
                     $response['errors'] = $errors;
                 } else {
+                    $file_path = $file->getAbsolutePath();
                     ee()->load->helper('file');
                     $response = array(
                         'dimensions' => ee()->image_lib->get_image_properties('', true),
