@@ -8,6 +8,10 @@ ExpressionEngine 5+.
 
 ## Changelog
 
+### 0.0.1
+
+- Lowercase library filename.
+
 ### 0.0.0
 
 - Alpha release
