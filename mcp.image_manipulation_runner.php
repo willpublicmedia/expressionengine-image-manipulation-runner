@@ -13,6 +13,7 @@ class Image_manipulation_runner_mcp
     public function __construct()
     {
         $this->base_uri = ee('CP/URL')->make('addons/settings/' . strtolower(CONSTANTS::MODULE_NAME));
+        ee()->load->library('logger');
     }
 
     public function index()
