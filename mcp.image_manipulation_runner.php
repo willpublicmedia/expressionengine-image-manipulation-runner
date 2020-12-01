@@ -98,7 +98,9 @@ class Image_manipulation_runner_mcp
             $path = $manipulation->getAbsolutePath();
             $del_dir = true;
             $del_success = delete_files($path, $del_dir);
-            echo "<p>$alt_path: $del_success</p>";
+            $msg = $del_success ? 'Deleted' : 'Failed to delete';
+            $msg = Constants::NAME . ': ' . $msg . ' ' . $path;
+            ee()->logger->developer($msg);
         }
         return;
     }
