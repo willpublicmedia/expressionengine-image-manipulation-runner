@@ -8,6 +8,11 @@ ExpressionEngine 5+.
 
 ## Changelog
 
+### 0.0.2
+
+- misc bugfixes
+- improve logging
+
 ### 0.0.1
 
 - Lowercase library filename.
