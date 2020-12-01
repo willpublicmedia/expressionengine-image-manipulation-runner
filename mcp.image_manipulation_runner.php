@@ -230,7 +230,7 @@ class Image_manipulation_runner_mcp
 
         $data = array(
             'allowed_types' => $model->allowed_types,
-            'file_dimensions' => count($model->FileDimensions->count()),
+            'file_dimensions' => $model->FileDimensions->count(),
         );
         $result = ee('Validation')->make($rules)->validate($model->toArray());
 
