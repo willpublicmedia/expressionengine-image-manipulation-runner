@@ -11,6 +11,7 @@ ExpressionEngine 5+.
 ### 0.1.1
 
 - use smaller batches.
+- update project url.
 
 ### 0.1.0
 
