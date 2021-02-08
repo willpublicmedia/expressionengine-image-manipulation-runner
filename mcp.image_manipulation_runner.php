@@ -209,7 +209,6 @@ class Image_manipulation_runner_mcp
                 continue;
             }
 
-return;
             foreach ($manipulations as $manipulation) {
                 if (!$file->exists()) {
                     continue;
