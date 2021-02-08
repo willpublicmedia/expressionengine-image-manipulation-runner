@@ -73,7 +73,7 @@ class Image_manipulation_runner_mcp
             $choices[$char] = $char;
         }
 
-        foreach (range(a, z) as $char) {
+        foreach (range('a', 'z') as $char) {
             $choices[$char] = $char;
         }
 
