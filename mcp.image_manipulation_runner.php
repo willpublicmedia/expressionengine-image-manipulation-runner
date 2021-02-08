@@ -202,8 +202,9 @@ class Image_manipulation_runner_mcp
         $resize_results = array();
         foreach ($files as $file) {
             $first_char = strtolower(substr($file->file_name, 0, 1));
+            $chars_match = strcmp((string) $limit, (string) $first_char);
 
-            if ($limit && $first_char !== $limit) {
+            if ($limit !== null && $chars_match !== 0) {
                 continue;
             }
 
