@@ -8,6 +8,10 @@ ExpressionEngine 5+.
 
 ## Changelog
 
+### unreleased
+
+- batch jobs by first character
+
 ### 0.0.2
 
 - misc bugfixes
