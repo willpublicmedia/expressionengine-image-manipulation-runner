@@ -48,10 +48,10 @@ class Image_manipulation_runner_mcp
     public function run_manipulations($destination_id, $clean = false)
     {
         $model = ee('Model')->get('UploadDestination')
-        ->filter('site_id', ee()->config->item('site_id'))
-        ->filter('module_id', 0) // limit selection to user-defined destinations
-        ->filter('id', $destination_id)
-        ->first();
+            ->filter('site_id', ee()->config->item('site_id'))
+            ->filter('module_id', 0) // limit selection to user-defined destinations
+            ->filter('id', $destination_id)
+            ->first();
 
         ee()->logger->developer(Constants::NAME . ': began resizing ' . $model->name);
 
@@ -61,6 +61,29 @@ class Image_manipulation_runner_mcp
 
         $this->resize_images($model);
         ee()->logger->developer(Constants::NAME . ': finished resizing ' . $model->name);
+    }
+
+    private function build_alphabet_dropdown()
+    {
+        $choices = array();
+        $choices['0-9'] = '0-9';
+        foreach (range('a', 'z') as $char) {
+            $choices[$char] = $char;
+        }
+
+        $field = array(
+            'title' => 'Limit Operations',
+            'desc' => 'Limit targets by first character of filename.',
+            'fields' => array(
+                'first_char' => array(
+                    'type' => 'select',
+                    'choices' => $choices,
+                ),
+            ),
+            'required' => 'false',
+        );
+
+        return $field;
     }
 
     private function build_delete_field()
@@ -86,6 +109,7 @@ class Image_manipulation_runner_mcp
             'EE Image Tools' => array(),
         );
         $form_fields['EE Image Tools'][] = $this->get_upload_destinations();
+        $form_fields['EE Image Tools'][] = $this->build_alphabet_dropdown();
         $form_fields['EE Image Tools'][] = $this->build_delete_field();
 
         return $form_fields;
