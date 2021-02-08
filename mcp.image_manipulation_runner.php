@@ -203,6 +203,11 @@ class Image_manipulation_runner_mcp
 
         $resize_results = array();
         foreach ($files as $file) {
+
+            if ($limit && !preg_match("#^[$limit](.*)$#i", $file->file_name)) {
+                continue;
+            }
+
             foreach ($manipulations as $manipulation) {
                 if (!$file->exists()) {
                     continue;
