@@ -25,7 +25,8 @@ class Image_manipulation_runner_mcp
             $validation_results = $this->validate_destination($request['image_destination']);
 
             if ($validation_results->isValid()) {
-                $this->run_manipulations($request['image_destination'], boolval($request['clean_files']), $request['first_char']);
+                $limit = $request['first_char'] === 0 ? null : $request['first_char'];
+                $this->run_manipulations($request['image_destination'], boolval($request['clean_files']), $limit);
             } else {
                 $this->handle_validation_errors($validation_results);
             }
@@ -208,6 +209,7 @@ class Image_manipulation_runner_mcp
                 continue;
             }
 
+return;
             foreach ($manipulations as $manipulation) {
                 if (!$file->exists()) {
                     continue;
