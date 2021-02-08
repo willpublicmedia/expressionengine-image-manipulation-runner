@@ -20,5 +20,5 @@ class Constants
 
     const MODULE_NAME = 'Image_manipulation_runner';
     
-    const VERSION = '0.1.3';
+    const VERSION = '0.1.4';
 }

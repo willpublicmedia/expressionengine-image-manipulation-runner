@@ -8,6 +8,10 @@ ExpressionEngine 5+.
 
 ## Changelog
 
+### 0.1.4
+
+- correct broken comparison on 0.
+
 ### 0.1.3
 
 - correct range syntax.
