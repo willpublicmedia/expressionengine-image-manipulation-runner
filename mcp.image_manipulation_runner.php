@@ -25,7 +25,7 @@ class Image_manipulation_runner_mcp
             $validation_results = $this->validate_destination($request['image_destination']);
 
             if ($validation_results->isValid()) {
-                $this->run_manipulations($request['image_destination'], boolval($request['clean_files']));
+                $this->run_manipulations($request['image_destination'], boolval($request['clean_files']), $request['first_char']);
             } else {
                 $this->handle_validation_errors($validation_results);
             }
@@ -45,7 +45,7 @@ class Image_manipulation_runner_mcp
         return ee('View')->make('ee:_shared/form')->render($data);
     }
 
-    public function run_manipulations($destination_id, $clean = false)
+    public function run_manipulations($destination_id, $clean = false, $limit = null)
     {
         $model = ee('Model')->get('UploadDestination')
             ->filter('site_id', ee()->config->item('site_id'))
@@ -56,10 +56,11 @@ class Image_manipulation_runner_mcp
         ee()->logger->developer(Constants::NAME . ': began resizing ' . $model->name);
 
         if ($clean) {
+            $limit = null;
             $this->clean_old_manipulations($model);
         }
 
-        $this->resize_images($model);
+        $this->resize_images($model, $limit);
         ee()->logger->developer(Constants::NAME . ': finished resizing ' . $model->name);
     }
 
@@ -192,7 +193,7 @@ class Image_manipulation_runner_mcp
         return;
     }
 
-    private function resize_images($destination)
+    private function resize_images($destination, $limit)
     {
         ee()->load->library('image_lib');
 
