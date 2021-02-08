@@ -66,6 +66,7 @@ class Image_manipulation_runner_mcp
     private function build_alphabet_dropdown()
     {
         $choices = array();
+        $choices[''] = [''];
         $choices['0-9'] = '0-9';
         $choices['a-c'] = 'a-c';
         $choices['d-f'] = 'd-f';
