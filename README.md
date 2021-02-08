@@ -8,7 +8,7 @@ ExpressionEngine 5+.
 
 ## Changelog
 
-### unreleased
+### 0.1.0
 
 - batch jobs by first character
 
