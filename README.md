@@ -8,6 +8,10 @@ ExpressionEngine 5+.
 
 ## Changelog
 
+### 0.1.2
+
+- use even smaller batches.
+
 ### 0.1.1
 
 - use smaller batches.
