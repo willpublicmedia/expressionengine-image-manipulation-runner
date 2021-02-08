@@ -69,21 +69,13 @@ class Image_manipulation_runner_mcp
     {
         $choices = array();
         $choices['all'] = ['all'];
-        $choices['0-3'] = '0-3';
-        $choices['4-6'] = '4-6';
-        $choices['7-9'] = '7-9';
-        $choices['a-b'] = 'a-b';
-        $choices['c-d'] = 'c-d';
-        $choices['e-f'] = 'e-f';
-        $choices['g-h'] = 'g-h';
-        $choices['i-j'] = 'i-j';
-        $choices['k-l'] = 'k-l';
-        $choices['m-n'] = 'm-n';
-        $choices['o-p'] = 'o-p';
-        $choices['q-r'] = 'q-r';
-        $choices['s-t'] = 's-t';
-        $choices['u-v'] = 'u-v';
-        $choices['w-z'] = 'w-z';
+        foreach (range(0, 9) as $char) {
+            $choices[$char] = $char;
+        }
+
+        foreach (range(a, z) as $char) {
+            $choices[$char] = $char;
+        }
 
         $field = array(
             'title' => 'Limit Operations',
