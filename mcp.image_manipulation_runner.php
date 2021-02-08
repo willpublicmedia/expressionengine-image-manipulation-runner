@@ -25,7 +25,7 @@ class Image_manipulation_runner_mcp
             $validation_results = $this->validate_destination($request['image_destination']);
 
             if ($validation_results->isValid()) {
-                $limit = $request['first_char'] === 0 ? null : $request['first_char'];
+                $limit = $request['first_char'] === 'all' ? null : $request['first_char'];
                 $this->run_manipulations($request['image_destination'], boolval($request['clean_files']), $limit);
             } else {
                 $this->handle_validation_errors($validation_results);
@@ -68,7 +68,7 @@ class Image_manipulation_runner_mcp
     private function build_alphabet_dropdown()
     {
         $choices = array();
-        $choices[''] = [''];
+        $choices['all'] = ['all'];
         $choices['0-3'] = '0-3';
         $choices['4-6'] = '4-6';
         $choices['7-9'] = '7-9';
